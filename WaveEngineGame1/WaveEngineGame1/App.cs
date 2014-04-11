@@ -22,9 +22,9 @@ namespace WaveEngineGame1
         public App()
         {
             this.Width = 800;
-            this.Height = 600;
+            this.Height = 480;
             this.FullScreen = false;
-            this.WindowTitle = "WaveEngineGame1";
+            this.WindowTitle = "RabbitJump";
         }
 
         public override void Initialize()

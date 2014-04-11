@@ -19,22 +19,43 @@ namespace WaveEngineGame1Project
         {
             RenderManager.BackgroundColor = Color.CornflowerBlue;
             
+            CrearEntidades();
+            //Collider2D colliderpj = personaje.FindComponent<RectangleCollider>();
+            //Collider2D colliderBola = bola.FindComponent<CircleCollider>();
 
-            var background = new Entity()
-                .AddComponent(new Transform2D(){
-                    DrawOrder = 1
-                })                
-                .AddComponent(new Sprite("Content/cavernaperdida.wpk"))
-                .AddComponent(new SpriteRenderer(DefaultLayers.Opaque));
-            EntityManager.Add(background);
+            //colliderpj.Intersects(colliderBola);
+        }
 
-            var barBot = new Entity("suelo")
+        private void CrearEntidades()
+        {
+            //Pintar Background
+            Entity background = new Entity("background")
                 .AddComponent(new Transform2D()
                 {
-                    XScale = 1.55f,
-                    YScale = 2f,
-                    X = WaveServices.Platform.ScreenWidth / 2,
-                    Y = WaveServices.Platform.ScreenHeight - 25
+                    DrawOrder = 1
+                })
+                .AddComponent(new Sprite("Content/fondo.wpk"))
+                .AddComponent(new SpriteRenderer(DefaultLayers.Opaque));
+           
+
+            Entity mountain = new Entity("mountain")
+                .AddComponent(new Transform2D()
+                {
+                    DrawOrder = 1
+                })
+                .AddComponent(new Sprite("Content/mountain.wpk"))
+                .AddComponent(new SpriteRenderer(DefaultLayers.Opaque));
+
+
+
+            EntityManager.Add(mountain);
+            EntityManager.Add(background);
+
+            /*Entity barBot = new Entity("suelo")
+                .AddComponent(new Transform2D()
+                {
+                    X = WaveServices.Platform.ScreenWidth/2,
+                    Y = WaveServices.Platform.ScreenHeight
                 })
                 .AddComponent(new Sprite("Content/Texture/wall.wpk"))
                 .AddComponent(new SpriteRenderer(DefaultLayers.Alpha))
@@ -43,7 +64,7 @@ namespace WaveEngineGame1Project
 
             EntityManager.Add(barBot);
 
-            var barTop = new Entity()
+            Entity barTop = new Entity()
                 .AddComponent(new Transform2D()
                 {
                     XScale = 1.55f,
@@ -58,7 +79,7 @@ namespace WaveEngineGame1Project
 
             EntityManager.Add(barTop);
 
-            var rampa = new Entity()
+            Entity rampa = new Entity()
                 .AddComponent(new Transform2D()
                 {
                     XScale = 1.6f,
@@ -70,12 +91,12 @@ namespace WaveEngineGame1Project
                 .AddComponent(new SpriteRenderer(DefaultLayers.Opaque))
                 .AddComponent(new RectangleCollider())
                 .AddComponent(new RigidBody2D() { IsKinematic = true });
-            
+
             EntityManager.Add(rampa);
 
-            rampa.FindComponent<RigidBody2D>().Rotation =  MathHelper.ToRadians(-25);
+            rampa.FindComponent<RigidBody2D>().Rotation = MathHelper.ToRadians(-25);
 
-            var baseEnemigo = new Entity()
+            Entity baseEnemigo = new Entity()
                 .AddComponent(new Transform2D()
                 {
                     XScale = 1f,
@@ -90,9 +111,9 @@ namespace WaveEngineGame1Project
 
             EntityManager.Add(baseEnemigo);
 
-            
-            
-            var personaje = new Entity("personaje")
+
+
+            Entity personaje = new Entity("personaje")
                 .AddComponent(new Transform2D()
                 {
                     X = 40,
@@ -107,7 +128,7 @@ namespace WaveEngineGame1Project
 
             EntityManager.Add(personaje);
 
-            var enemigo = new Entity()
+            Entity enemigo = new Entity()
                 .AddComponent(new Transform2D()
                 {
                     X = WaveServices.Platform.ScreenWidth - 40,
@@ -116,13 +137,13 @@ namespace WaveEngineGame1Project
                 })
                 .AddComponent(new Sprite("Content/Carlo.wpk"))
                 .AddComponent(new SpriteRenderer(DefaultLayers.Opaque))
-                .AddComponent(new RectangleCollider())            
+                .AddComponent(new RectangleCollider())
                 .AddComponent(new RigidBody2D());
 
             EntityManager.Add(enemigo);
 
 
-            var bola = new Entity("bola")
+            Entity bola = new Entity("bola")
                     .AddComponent(new Transform2D()
                     {
                         //XScale = 1.55f,
@@ -138,16 +159,29 @@ namespace WaveEngineGame1Project
                     .AddComponent(new BolaBehavior())
                     .AddComponent(new RigidBody2D());
 
-            EntityManager.Add(bola);
-                    
-                
-            
+            EntityManager.Add(bola);*/
+        }
 
+        private void BallSpawn()
+        {
 
-            //Collider2D colliderpj = personaje.FindComponent<RectangleCollider>();
-            //Collider2D colliderBola = bola.FindComponent<CircleCollider>();
+        }
 
-            //colliderpj.Intersects(colliderBola);
+        private Entity CreateBall(float x,float y)
+        {
+            //Coordenadas aleatorias dentro de un rango
+            Entity bola = new Entity("bola")
+                                .AddComponent(new Transform2D()
+                                {
+                                    X = (WaveServices.Platform.ScreenWidth - 50) / 2,
+                                    Y = 300
+                                })
+                                .AddComponent(new Sprite("Content/balon.wpk"))
+                                .AddComponent(new SpriteRenderer(DefaultLayers.Opaque))
+                                .AddComponent(new CircleCollider())
+                                .AddComponent(new BolaBehavior())
+                                .AddComponent(new RigidBody2D());
+            return bola;
         }
     }
 }

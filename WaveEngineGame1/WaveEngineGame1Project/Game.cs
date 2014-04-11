@@ -14,8 +14,12 @@ namespace WaveEngineGame1Project
         {
             base.Initialize(application);
 
+            ViewportManager vm = WaveServices.GetService<ViewportManager>();
+            vm.Activate(800,480, ViewportManager.StretchMode.UniformToFill);
+
             ScreenContext screenContext = new ScreenContext(new MyScene());
             WaveServices.ScreenContextManager.To(screenContext);
+         
         }
     }
 }

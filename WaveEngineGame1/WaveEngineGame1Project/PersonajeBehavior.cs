@@ -1,6 +1,7 @@
 ﻿#region Using Statemets
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,6 +20,8 @@ namespace WaveEngineGame1Project
         public RigidBody2D body;
 
         private KeyboardState lastKeyboardState;
+
+        private EventLog myLog;
 
         public PersonajeBehavior()
         {

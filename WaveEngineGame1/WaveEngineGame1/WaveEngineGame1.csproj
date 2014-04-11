@@ -74,6 +74,12 @@
     <None Include="Content\cavernaperdida.wpk">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Content\fondo.wpk">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\mountain.wpk">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Content\personaje.wpk">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
