@@ -42,24 +42,16 @@ namespace WaveEngineGame1Project
 
             this.lastKeyboardState = input.KeyboardState;
 
-            Entity pjProta = this.EntityManager.Find("personaje");
-            Collider2D colPj = pjProta.FindComponent<RectangleCollider>();
+            /*Entity pjProta = this.EntityManager.Find("personaje");
+            Collider2D colPj = pjProta.FindComponent<PerPixelCollider>();
 
-            Entity bola = this.EntityManager.Find("bola");
-            Collider2D collider = bola.FindComponent<CircleCollider>();
-
-            Entity suelo = this.EntityManager.Find("suelo");
-            Collider2D colFloor = bola.FindComponent<CircleCollider>();
-
-            if (colPj.Intersects(colFloor))
-            {
-                intentos = 0;
-            }
+            Entity bola = this.EntityManager.Find("mountain");
+            Collider2D collider = bola.FindComponent<PerPixelCollider>();
 
             if (collider.Intersects(colPj))
             {
                 body.ApplyLinearImpulse(new Vector2(-3, -2));
-            }
+            }*/
         }
     }
 }

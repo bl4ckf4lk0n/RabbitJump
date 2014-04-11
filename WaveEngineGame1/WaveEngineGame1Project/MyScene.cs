@@ -18,7 +18,7 @@ namespace WaveEngineGame1Project
         protected override void CreateScene()
         {
             RenderManager.BackgroundColor = Color.CornflowerBlue;
-            
+            //RenderManager.DebugLines = true;
             CrearEntidades();
             //Collider2D colliderpj = personaje.FindComponent<RectangleCollider>();
             //Collider2D colliderBola = bola.FindComponent<CircleCollider>();
@@ -36,130 +36,113 @@ namespace WaveEngineGame1Project
                 })
                 .AddComponent(new Sprite("Content/fondo.wpk"))
                 .AddComponent(new SpriteRenderer(DefaultLayers.Opaque));
-           
+
 
             Entity mountain = new Entity("mountain")
-                .AddComponent(new Transform2D()
-                {
-                    DrawOrder = 1
-                })
                 .AddComponent(new Sprite("Content/mountain.wpk"))
-                .AddComponent(new SpriteRenderer(DefaultLayers.Opaque));
-
-
-
-            EntityManager.Add(mountain);
-            EntityManager.Add(background);
-
-            /*Entity barBot = new Entity("suelo")
-                .AddComponent(new Transform2D()
-                {
-                    X = WaveServices.Platform.ScreenWidth/2,
-                    Y = WaveServices.Platform.ScreenHeight
-                })
-                .AddComponent(new Sprite("Content/Texture/wall.wpk"))
                 .AddComponent(new SpriteRenderer(DefaultLayers.Alpha))
-                .AddComponent(new RectangleCollider())
-                .AddComponent(new RigidBody2D() { IsKinematic = true });
-
-            EntityManager.Add(barBot);
-
-            Entity barTop = new Entity()
                 .AddComponent(new Transform2D()
                 {
-                    XScale = 1.55f,
-                    YScale = 2f,
-                    X = WaveServices.Platform.ScreenWidth / 2,
-                    Y = 0
-                })
-                .AddComponent(new Sprite("Content/Texture/wall.wpk"))
-                .AddComponent(new SpriteRenderer(DefaultLayers.Alpha))
-                .AddComponent(new RectangleCollider())
-                .AddComponent(new RigidBody2D() { IsKinematic = true });
-
-            EntityManager.Add(barTop);
-
-            Entity rampa = new Entity()
-                .AddComponent(new Transform2D()
-                {
-                    XScale = 1.6f,
-                    YScale = 2f,
-                    X = 700,
-                    Y = 400,
-                })
-                .AddComponent(new Sprite("Content/Texture/wall.wpk"))
-                .AddComponent(new SpriteRenderer(DefaultLayers.Opaque))
-                .AddComponent(new RectangleCollider())
-                .AddComponent(new RigidBody2D() { IsKinematic = true });
-
-            EntityManager.Add(rampa);
-
-            rampa.FindComponent<RigidBody2D>().Rotation = MathHelper.ToRadians(-25);
-
-            Entity baseEnemigo = new Entity()
-                .AddComponent(new Transform2D()
-                {
-                    XScale = 1f,
-                    YScale = 2f,
-                    X = WaveServices.Platform.ScreenWidth + 125,
-                    Y = 300,
-                })
-                .AddComponent(new Sprite("Content/Texture/wall.wpk"))
-                .AddComponent(new SpriteRenderer(DefaultLayers.Opaque))
-                .AddComponent(new RectangleCollider())
-                .AddComponent(new RigidBody2D() { IsKinematic = true });
-
-            EntityManager.Add(baseEnemigo);
-
+                    DrawOrder = 0.7f,
+                    //X = WaveServices.Platform.ScreenWidth/2,
+                    //Y = WaveServices.Platform.ScreenHeight/2,
+                });
 
 
             Entity personaje = new Entity("personaje")
                 .AddComponent(new Transform2D()
                 {
-                    X = 40,
-                    Y = WaveServices.Platform.ScreenHeight - 70,
+                    X = 100,
+                    Y = 100
 
                 })
-                .AddComponent(new Sprite("Content/casillas.wpk"))
-                .AddComponent(new SpriteRenderer(DefaultLayers.Opaque))
-                .AddComponent(new RectangleCollider())
+                .AddComponent(new Sprite("Content/conejito.wpk"))
+                .AddComponent(new SpriteRenderer(DefaultLayers.Alpha))
+                .AddComponent(new PerPixelCollider("Content/conejito.wpk", 0))
                 .AddComponent(new PersonajeBehavior())
                 .AddComponent(new RigidBody2D());
 
+            Entity barra1 = new Entity()
+               .AddComponent(new Transform2D()
+               {
+                   X = 259/2,
+                   Y = WaveServices.Platform.ScreenHeight - 40
+               })
+               .AddComponent(new Sprite("Content/barra1.wpk"))
+               .AddComponent(new SpriteRenderer(DefaultLayers.Alpha))
+               .AddComponent(new PerPixelCollider("Content/barra1.wpk", 0))
+               .AddComponent(new PersonajeBehavior())
+               .AddComponent(new RigidBody2D() { IsKinematic = true });
+
+            Entity barra2 = new Entity()
+               .AddComponent(new Transform2D()
+               {
+                   X = 305,
+                   Y = WaveServices.Platform.ScreenHeight - 100,
+               })
+               .AddComponent(new Sprite("Content/barra2.wpk"))
+               .AddComponent(new SpriteRenderer(DefaultLayers.Alpha))
+               .AddComponent(new PerPixelCollider("Content/barra2.wpk", 0))
+               .AddComponent(new PersonajeBehavior())
+               .AddComponent(new RigidBody2D() { IsKinematic = true,
+                                                 Rotation = MathHelper.ToRadians(42)});
+
+            Entity barra3 = new Entity()
+               .AddComponent(new Transform2D()
+               {
+                   X = 435,
+                   Y = WaveServices.Platform.ScreenHeight - 190,
+               })
+               .AddComponent(new Sprite("Content/barra2.wpk"))
+               .AddComponent(new SpriteRenderer(DefaultLayers.Alpha))
+               .AddComponent(new PerPixelCollider("Content/barra2.wpk", 0))
+               .AddComponent(new PersonajeBehavior())
+               .AddComponent(new RigidBody2D()
+               {
+                   IsKinematic = true,
+                   Rotation = MathHelper.ToRadians(70)
+               });
+
+            Entity barra4 = new Entity()
+               .AddComponent(new Transform2D()
+               {
+                   X = 550,
+                   Y = WaveServices.Platform.ScreenHeight - 250,
+               })
+               .AddComponent(new Sprite("Content/barra2.wpk"))
+               .AddComponent(new SpriteRenderer(DefaultLayers.Alpha))
+               .AddComponent(new PerPixelCollider("Content/barra2.wpk", 0))
+               .AddComponent(new PersonajeBehavior())
+               .AddComponent(new RigidBody2D()
+               {
+                   IsKinematic = true,
+                   Rotation = MathHelper.ToRadians(45)
+               });
+
+            Entity barra5 = new Entity()
+               .AddComponent(new Transform2D()
+               {
+                   X = 650,
+                   Y = WaveServices.Platform.ScreenHeight - 335,
+               })
+               .AddComponent(new Sprite("Content/barra2.wpk"))
+               .AddComponent(new SpriteRenderer(DefaultLayers.Alpha))
+               .AddComponent(new PerPixelCollider("Content/barra2.wpk", 0))
+               .AddComponent(new PersonajeBehavior())
+               .AddComponent(new RigidBody2D()
+               {
+                   IsKinematic = true,
+                   Rotation = MathHelper.ToRadians(70)
+               });
+
             EntityManager.Add(personaje);
-
-            Entity enemigo = new Entity()
-                .AddComponent(new Transform2D()
-                {
-                    X = WaveServices.Platform.ScreenWidth - 40,
-                    Y = 100,// WaveServices.Platform.ScreenHeight - 70,
-
-                })
-                .AddComponent(new Sprite("Content/Carlo.wpk"))
-                .AddComponent(new SpriteRenderer(DefaultLayers.Opaque))
-                .AddComponent(new RectangleCollider())
-                .AddComponent(new RigidBody2D());
-
-            EntityManager.Add(enemigo);
-
-
-            Entity bola = new Entity("bola")
-                    .AddComponent(new Transform2D()
-                    {
-                        //XScale = 1.55f,
-                        //YScale = 2f,
-                        X = (WaveServices.Platform.ScreenWidth - 50) / 2,
-                        Y = 300,// WaveServices.Platform.ScreenHeight - 70,
-
-                    })
-
-                    .AddComponent(new Sprite("Content/balon.wpk"))
-                    .AddComponent(new SpriteRenderer(DefaultLayers.Opaque))
-                    .AddComponent(new CircleCollider())
-                    .AddComponent(new BolaBehavior())
-                    .AddComponent(new RigidBody2D());
-
-            EntityManager.Add(bola);*/
+            EntityManager.Add(barra1);
+            EntityManager.Add(barra2);
+            EntityManager.Add(barra3);
+            EntityManager.Add(barra4);
+            EntityManager.Add(barra5);
+            EntityManager.Add(mountain);
+            EntityManager.Add(background);
         }
 
         private void BallSpawn()
