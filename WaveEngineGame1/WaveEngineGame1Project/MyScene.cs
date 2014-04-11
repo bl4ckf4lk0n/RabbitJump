@@ -48,7 +48,7 @@ namespace WaveEngineGame1Project
 
 
 
-            EntityManager.Add(mountain);
+            //EntityManager.Add(mountain);
             EntityManager.Add(background);
 
             /*Entity barBot = new Entity("suelo")
@@ -160,21 +160,39 @@ namespace WaveEngineGame1Project
                     .AddComponent(new RigidBody2D());
 
             EntityManager.Add(bola);*/
+
+            for (int i = 0; i < 10; i++)
+            {
+                BallSpawn(i);
+            }
+        
         }
 
-        private void BallSpawn()
+
+        
+        
+
+        private void BallSpawn(int it)
         {
+            System.Random r = new System.Random(DateTime.Now.Millisecond);
 
+            int xAleatoria = r.Next(3*WaveServices.Platform.ScreenWidth/4, WaveServices.Platform.ScreenWidth);
+            int yAleatoria = r.Next(0, WaveServices.Platform.ScreenHeight/4);
+
+            //Entity bolita = CreateBall(1f, 1f);
+            //EntityManager.Add(bolita);
+            Entity bolita = CreateBall((float)xAleatoria, (float)yAleatoria, it);
+            EntityManager.Add(bolita);
         }
 
-        private Entity CreateBall(float x,float y)
+        private Entity CreateBall(float x,float y, int it)
         {
             //Coordenadas aleatorias dentro de un rango
-            Entity bola = new Entity("bola")
+            Entity bola = new Entity("bola"+it)
                                 .AddComponent(new Transform2D()
                                 {
-                                    X = (WaveServices.Platform.ScreenWidth - 50) / 2,
-                                    Y = 300
+                                    X = x,//(WaveServices.Platform.ScreenWidth - 50) / 2,
+                                    Y = y//300
                                 })
                                 .AddComponent(new Sprite("Content/balon.wpk"))
                                 .AddComponent(new SpriteRenderer(DefaultLayers.Opaque))
@@ -183,5 +201,6 @@ namespace WaveEngineGame1Project
                                 .AddComponent(new RigidBody2D());
             return bola;
         }
+
     }
 }
