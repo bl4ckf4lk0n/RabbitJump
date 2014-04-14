@@ -48,7 +48,7 @@ namespace WaveEngineGame1Project
                 .AddComponent(new Sprite("Content/suelo.wpk"))
                 .AddComponent(new SpriteRenderer(DefaultLayers.Alpha))
                 .AddComponent(new RectangleCollider())
-                .AddComponent(new RigidBody2D() { IsKinematic = true, Restitution = 0});
+                .AddComponent(new RigidBody2D() { IsKinematic = true, Restitution = 0, CollisionCategories = Physic2DCategory.Cat1});
 
 
             Entity personaje = new Entity("personaje")
@@ -62,11 +62,29 @@ namespace WaveEngineGame1Project
                 .AddComponent(new SpriteRenderer(DefaultLayers.Alpha))
                 .AddComponent(new PerPixelCollider("Content/conejito.wpk", 0))
                 .AddComponent(new PersonajeBehavior())
-                .AddComponent(new RigidBody2D() { Restitution = 0 });
+                .AddComponent(new RigidBody2D() { Restitution = 0, CollisionCategories = Physic2DCategory.Cat2 });
+
+            Entity bola = new Entity("bola")
+                .AddComponent(new Transform2D()
+                {
+                    X = 300,
+                    Y = 100
+
+                })
+                .AddComponent(new Sprite("Content/mediano.wpk"))
+                .AddComponent(new SpriteRenderer(DefaultLayers.Alpha))
+                .AddComponent(new CircleCollider())
+                .AddComponent(new BolaBehavior())
+                .AddComponent(new RigidBody2D() { CollidesWith = Physic2DCategory.Cat2 });
+
+                RigidBody2D boxRigidBody = bola.FindComponentOfType<RigidBody2D>();
+                if (boxRigidBody != null)
+                {
+                    boxRigidBody.OnPhysic2DCollision += BoxRigidBody_OnPhysic2DCollision;
+                }
 
 
-
-
+            EntityManager.Add(bola);
             EntityManager.Add(personaje);
             EntityManager.Add(floor);
             EntityManager.Add(background);
@@ -79,6 +97,10 @@ namespace WaveEngineGame1Project
 
         }
 
+        private void BoxRigidBody_OnPhysic2DCollision(object sender, Physic2DCollisionEventArgs args)
+        {
+            
+        }
 
         
 
