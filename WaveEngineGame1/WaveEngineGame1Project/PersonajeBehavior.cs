@@ -5,8 +5,10 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WaveEngine.Common.Graphics;
 using WaveEngine.Common.Input;
 using WaveEngine.Common.Math;
+using WaveEngine.Components.Animation;
 using WaveEngine.Framework;
 using WaveEngine.Framework.Graphics;
 using WaveEngine.Framework.Physics2D;
@@ -17,75 +19,115 @@ namespace WaveEngineGame1Project
 {
     public class PersonajeBehavior : Behavior
     {
+
+        private const int SPEED = 5;
+        private const int RIGHT = 1;
+        private const int LEFT = -1;
+        private const int NONE = 0;
+        private const int BORDER_OFFSET = 25;
+
+
         [RequiredComponent]
         public RigidBody2D body;
         [RequiredComponent]
-        public Transform2D transform;
+        public Transform2D trans2D;
         [RequiredComponent]
-        public PerPixelCollider collider;
+        public RectangleCollider collider;
 
+        [RequiredComponent]
+        public Animation2D anim2D;
+
+        private enum AnimState { Idle, Right, Left };
+        private AnimState currentState, lastState;
+
+        private int direction;
         private KeyboardState lastKeyboardState;
+        private TouchPanelState touchpanel;
 
 
         private Input input;
+        private MyScene escena;
 
 
-        public PersonajeBehavior()
+        public PersonajeBehavior(MyScene escena)
         {
             this.lastKeyboardState = new KeyboardState();
             input = WaveServices.Input;
+            this.currentState = AnimState.Idle;
+            this.escena = escena;
+            
 
         }
 
         protected override void Update(TimeSpan gameTime)
         {
-
-
-            if (input.KeyboardState.D == ButtonState.Pressed)
+            
+            if (trans2D.X < -37.5f || trans2D.X > WaveServices.Platform.ScreenWidth + 37.5f)
             {
-                body.ApplyLinearImpulse(new Vector2(0.2f, 0));
+                escena.EndGame();
+            }
+
+            currentState = AnimState.Idle;
+
+            touchpanel = WaveServices.Input.TouchPanelState;
+            if (touchpanel.Count > 0)
+            {
+                TouchLocation firstTouch = touchpanel[0];
+
+                if (firstTouch.Position.X > WaveServices.Platform.ScreenWidth / 2)
+                {
+                    currentState = AnimState.Right;
+                }
+                else
+                {
+                    currentState = AnimState.Left;
+                }
+            }
+
+            /*if (input.KeyboardState.D == ButtonState.Pressed)
+            {
+                currentState = AnimState.Right;
             }
             else if (input.KeyboardState.A == ButtonState.Pressed)
             {
-                body.ApplyLinearImpulse(new Vector2(-0.2f, 0));
+                currentState = AnimState.Left;
+            }*/
+
+            if (currentState != lastState)
+            {
+                switch (currentState)
+                {
+                    case AnimState.Idle:
+                        anim2D.CurrentAnimation = "Idle";
+                        anim2D.Play(true);
+                        direction = NONE;
+                        break;
+                    case AnimState.Right:
+                        anim2D.CurrentAnimation = "Running";
+                        trans2D.Effect = SpriteEffects.FlipHorizontally;
+                        anim2D.Play(true);
+                        direction = RIGHT;
+                        break;
+                    case AnimState.Left:
+                        anim2D.CurrentAnimation = "Running";
+                        trans2D.Effect = SpriteEffects.None;
+                        anim2D.Play(true);
+                        direction = LEFT;
+                        break;
+                }
             }
 
-            /*Input input = WaveServices.Input;
+            lastState = currentState;
 
-                if (input.KeyboardState.Space == ButtonState.Pressed &&
-                    this.lastKeyboardState.Space == ButtonState.Release && intentos < 2)
-                {
-                    body.ApplyLinearImpulse(new Vector2(0, -2));
-                    intentos++;
-                }
-
-            this.lastKeyboardState = input.KeyboardState;
-
-
-            Entity pjProta = this.EntityManager.Find("personaje");
-            Collider2D colPj = pjProta.FindComponent<PerPixelCollider>();
-
-            Entity bola = this.EntityManager.Find("mountain");
-            Collider2D collider = bola.FindComponent<PerPixelCollider>();
-
-            Entity suelo = this.EntityManager.Find("suelo");
-            Collider2D col_suelo = suelo.FindComponent<RectangleCollider>();
-
-            if (transform.Y == WaveServices.Platform.ScreenHeight - 250)
+            if (direction == RIGHT)
             {
-                 intentos = 0;
-            }*/
-
-            /*Entity pjProta = this.EntityManager.Find("personaje");
-            Collider2D colPj = pjProta.FindComponent<PerPixelCollider>();
-
-            Entity suelo = this.EntityManager.Find("floor");
-            Collider2D colPj2 = suelo.FindComponent<RectangleCollider>();
-
-            if (colPj.Intersects(colPj2))
+                body.ApplyLinearImpulse(new Vector2(0.1f, 0));
+            }
+            else if (direction == LEFT)
             {
-                body.ApplyLinearImpulse(new Vector2(0, -2));
-            }*/
+                body.ApplyLinearImpulse(new Vector2(-0.1f, 0));
+            }
+
         }
     }
 }

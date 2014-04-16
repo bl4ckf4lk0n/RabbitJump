@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="BolaBehavior.cs" />
     <Compile Include="Game.cs" />
+    <Compile Include="Menu.cs" />
     <Compile Include="MyScene.cs" />
     <Compile Include="PersonajeBehavior.cs" />
   </ItemGroup>

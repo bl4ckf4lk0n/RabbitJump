@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using WaveEngine.Common.Input;
 using WaveEngine.Common.Math;
 using WaveEngine.Framework;
+using WaveEngine.Framework.Graphics;
 using WaveEngine.Framework.Physics2D;
 using WaveEngine.Framework.Services;
 #endregion
@@ -16,15 +17,22 @@ namespace WaveEngineGame1Project
     class BolaBehavior : Behavior
     {
         [RequiredComponent]
-        public RigidBody2D body;
-        [RequiredComponent]
-        public CircleCollider collider;
+        Transform2D transform;
 
-        private Vector2 pjPosition = Vector2.Zero;
+        private int id;
+
+        public BolaBehavior(int id)
+        {
+            this.id = id;
+        }
 
         protected override void Update(TimeSpan gameTime)
         {
-
+            if (transform.Y > WaveServices.Platform.ScreenHeight)
+            {
+                Entity ball = EntityManager.Find("bola" + id);
+                EntityManager.Remove(ball);
+            }
         }
 
     }

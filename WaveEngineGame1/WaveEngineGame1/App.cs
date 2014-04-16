@@ -24,7 +24,7 @@ namespace WaveEngineGame1
             this.Width = 800;
             this.Height = 480;
             this.FullScreen = false;
-            this.WindowTitle = "RabbitJump";
+            this.WindowTitle = "RabbitRun";
         }
 
         public override void Initialize()
