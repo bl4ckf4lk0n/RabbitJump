@@ -24,6 +24,7 @@ namespace WaveEngineGame1Project
         private DateTime startTime;
         private TextBlock score;
         private TextBlock bestscore;
+        private Entity personaje;
 
         protected override void CreateScene()
         {
@@ -58,7 +59,7 @@ namespace WaveEngineGame1Project
                 .AddComponent(new RigidBody2D() { IsKinematic = true, Restitution = 0, CollisionCategories = Physic2DCategory.Cat1});
 
 
-            Entity personaje = new Entity("personaje")
+            personaje = new Entity("personaje")
                 .AddComponent(new Transform2D()
                 {
                     X = 100,
@@ -68,7 +69,8 @@ namespace WaveEngineGame1Project
                 .AddComponent(new Sprite("Content/conejo_spritesheet.wpk"))
                 .AddComponent(Animation2D.Create<TexturePackerGenericXml>("Content/conejo_spritesheet.xml")
                     .Add("Idle", new SpriteSheetAnimationSequence() { First = 1, Length = 1 })
-                    .Add("Running", new SpriteSheetAnimationSequence() { First = 1, Length = 5 }))
+                    .Add("Running", new SpriteSheetAnimationSequence() { First = 1, Length = 5 })
+                    .Add("Dead", new SpriteSheetAnimationSequence() { First = 6, Length = 1 }))
                 .AddComponent(new AnimatedSpriteRenderer(DefaultLayers.Alpha))
                 .AddComponent(new RectangleCollider())
                 .AddComponent(new PersonajeBehavior(this))
@@ -115,7 +117,8 @@ namespace WaveEngineGame1Project
 
         private void BoxRigidBody_OnPhysic2DCollision(object sender, Physic2DCollisionEventArgs args)
         {
-            EndGame();
+            PersonajeBehavior comportamiento = personaje.FindComponent<PersonajeBehavior>();
+            comportamiento.currentState = PersonajeBehavior.AnimState.Dead;
         }
 
         public void EndGame()

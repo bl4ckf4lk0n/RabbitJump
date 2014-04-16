@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using WaveEngine.Common.Graphics;
 using WaveEngine.Common.Input;
@@ -37,97 +38,121 @@ namespace WaveEngineGame1Project
         [RequiredComponent]
         public Animation2D anim2D;
 
-        private enum AnimState { Idle, Right, Left };
-        private AnimState currentState, lastState;
+        public enum AnimState { Idle, Right, Left, Dead };
+        public AnimState currentState, lastState;
 
         private int direction;
-        private KeyboardState lastKeyboardState;
         private TouchPanelState touchpanel;
 
 
         private Input input;
         private MyScene escena;
 
+        private int lastMovement;
+
 
         public PersonajeBehavior(MyScene escena)
         {
-            this.lastKeyboardState = new KeyboardState();
             input = WaveServices.Input;
             this.currentState = AnimState.Idle;
             this.escena = escena;
-            
-
+            lastMovement = 0;
         }
 
         protected override void Update(TimeSpan gameTime)
         {
-            
-            if (trans2D.X < -37.5f || trans2D.X > WaveServices.Platform.ScreenWidth + 37.5f)
+            if (lastState != AnimState.Dead)
             {
-                escena.EndGame();
-            }
-
-            currentState = AnimState.Idle;
-
-            touchpanel = WaveServices.Input.TouchPanelState;
-            if (touchpanel.Count > 0)
-            {
-                TouchLocation firstTouch = touchpanel[0];
-
-                if (firstTouch.Position.X > WaveServices.Platform.ScreenWidth / 2)
+                if (trans2D.X < -37.5f || trans2D.X > WaveServices.Platform.ScreenWidth + 37.5f)
                 {
-                    currentState = AnimState.Right;
+                    escena.EndGame();
                 }
-                else
+
+                if (currentState != AnimState.Dead)
                 {
-                    currentState = AnimState.Left;
+                    currentState = AnimState.Idle;
+
+                    if (!System.Diagnostics.Debugger.IsAttached)
+                    {
+                        touchpanel = WaveServices.Input.TouchPanelState;
+                        if (touchpanel.Count > 0)
+                        {
+                            TouchLocation firstTouch = touchpanel[0];
+
+                            if (firstTouch.Position.X > WaveServices.Platform.ScreenWidth / 2)
+                            {
+                                currentState = AnimState.Right;
+                            }
+                            else
+                            {
+                                currentState = AnimState.Left;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (input.KeyboardState.D == ButtonState.Pressed)
+                        {
+                            currentState = AnimState.Right;
+                        }
+                        else if (input.KeyboardState.A == ButtonState.Pressed)
+                        {
+                            currentState = AnimState.Left;
+                        }
+                    }
                 }
-            }
 
-            /*if (input.KeyboardState.D == ButtonState.Pressed)
-            {
-                currentState = AnimState.Right;
-            }
-            else if (input.KeyboardState.A == ButtonState.Pressed)
-            {
-                currentState = AnimState.Left;
-            }*/
 
-            if (currentState != lastState)
-            {
-                switch (currentState)
+
+                if (currentState != lastState)
                 {
-                    case AnimState.Idle:
-                        anim2D.CurrentAnimation = "Idle";
-                        anim2D.Play(true);
-                        direction = NONE;
-                        break;
-                    case AnimState.Right:
-                        anim2D.CurrentAnimation = "Running";
-                        trans2D.Effect = SpriteEffects.FlipHorizontally;
-                        anim2D.Play(true);
-                        direction = RIGHT;
-                        break;
-                    case AnimState.Left:
-                        anim2D.CurrentAnimation = "Running";
-                        trans2D.Effect = SpriteEffects.None;
-                        anim2D.Play(true);
-                        direction = LEFT;
-                        break;
+                    switch (currentState)
+                    {
+                        case AnimState.Idle:
+                            anim2D.CurrentAnimation = "Idle";
+                            anim2D.Play(true);
+                            direction = NONE;
+                            break;
+                        case AnimState.Right:
+                            anim2D.CurrentAnimation = "Running";
+                            trans2D.Effect = SpriteEffects.FlipHorizontally;
+                            anim2D.Play(true);
+                            direction = RIGHT;
+                            break;
+                        case AnimState.Left:
+                            anim2D.CurrentAnimation = "Running";
+                            trans2D.Effect = SpriteEffects.None;
+                            anim2D.Play(true);
+                            direction = LEFT;
+                            break;
+                        case AnimState.Dead:
+                            anim2D.CurrentAnimation = "Dead";
+                            trans2D.Effect = SpriteEffects.None;
+                            if(lastMovement == RIGHT)
+                                trans2D.Effect = SpriteEffects.FlipHorizontally;
+                            anim2D.Play(true);
+                            direction = NONE;
+                            WaveEngine.Framework.Services.Timer timer = WaveServices.TimerFactory.CreateTimer("Dead", TimeSpan.FromSeconds(1f),  () =>
+                            {
+                                escena.EndGame();
+                            },false);
+                            break;
+                    }
+                }
+
+                lastState = currentState;
+
+                if (direction == RIGHT)
+                {
+                    body.ApplyLinearImpulse(new Vector2(0.1f, 0));
+                    lastMovement = RIGHT;
+                }
+                else if (direction == LEFT)
+                {
+                    body.ApplyLinearImpulse(new Vector2(-0.1f, 0));
+                    lastMovement = LEFT;
                 }
             }
-
-            lastState = currentState;
-
-            if (direction == RIGHT)
-            {
-                body.ApplyLinearImpulse(new Vector2(0.1f, 0));
-            }
-            else if (direction == LEFT)
-            {
-                body.ApplyLinearImpulse(new Vector2(-0.1f, 0));
-            }
-
         }
     }
 }
