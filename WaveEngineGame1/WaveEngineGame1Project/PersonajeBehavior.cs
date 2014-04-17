@@ -63,7 +63,7 @@ namespace WaveEngineGame1Project
         {
             if (lastState != AnimState.Dead)
             {
-                if (trans2D.X < -37.5f || trans2D.X > WaveServices.Platform.ScreenWidth + 37.5f)
+                if (trans2D.X < -37.5f || trans2D.X > Game.VMWidth + 37.5f)
                 {
                     escena.EndGame();
                 }
@@ -72,30 +72,16 @@ namespace WaveEngineGame1Project
                 {
                     currentState = AnimState.Idle;
 
-                    if (!System.Diagnostics.Debugger.IsAttached)
+                    touchpanel = WaveServices.Input.TouchPanelState;
+                    if (touchpanel.Count > 0)
                     {
-                        touchpanel = WaveServices.Input.TouchPanelState;
-                        if (touchpanel.Count > 0)
-                        {
-                            TouchLocation firstTouch = touchpanel[0];
+                        TouchLocation firstTouch = touchpanel[0];
 
-                            if (firstTouch.Position.X > WaveServices.Platform.ScreenWidth / 2)
-                            {
-                                currentState = AnimState.Right;
-                            }
-                            else
-                            {
-                                currentState = AnimState.Left;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        if (input.KeyboardState.D == ButtonState.Pressed)
+                        if (firstTouch.Position.X > Game.VMWidth / 2)
                         {
                             currentState = AnimState.Right;
                         }
-                        else if (input.KeyboardState.A == ButtonState.Pressed)
+                        else
                         {
                             currentState = AnimState.Left;
                         }

@@ -28,7 +28,7 @@ namespace WaveEngineGame1Project
 
         protected override void Update(TimeSpan gameTime)
         {
-            if (transform.Y > WaveServices.Platform.ScreenHeight)
+            if (transform.Y > Game.VMHeight)
             {
                 Entity ball = EntityManager.Find("bola" + id);
                 EntityManager.Remove(ball);

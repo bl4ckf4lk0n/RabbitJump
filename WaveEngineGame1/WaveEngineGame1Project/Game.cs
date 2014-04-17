@@ -12,13 +12,15 @@ namespace WaveEngineGame1Project
     public class Game : WaveEngine.Framework.Game
     {
         public static String best_score;
+        public static float VMWidth = 800;
+        public static float VMHeight = 480;
 
         public override void Initialize(IApplication application)
         {
             base.Initialize(application);
 
             ViewportManager vm = WaveServices.GetService<ViewportManager>();
-            vm.Activate(800,480, ViewportManager.StretchMode.UniformToFill);
+            vm.Activate(VMWidth, VMHeight, ViewportManager.StretchMode.Fill);
 
             ObtenerMejorPuntuacion();
 

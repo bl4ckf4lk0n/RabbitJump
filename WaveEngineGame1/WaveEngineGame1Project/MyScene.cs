@@ -50,8 +50,8 @@ namespace WaveEngineGame1Project
             Entity floor = new Entity("floor")
                 .AddComponent(new Transform2D()
                 {
-                    X = WaveServices.Platform.ScreenWidth/2,
-                    Y = WaveServices.Platform.ScreenHeight - 17.5f
+                    X = Game.VMWidth/2,
+                    Y = Game.VMHeight - 17.5f
                 })
                 .AddComponent(new Sprite("Content/suelo2.wpk"))
                 .AddComponent(new SpriteRenderer(DefaultLayers.Alpha))
