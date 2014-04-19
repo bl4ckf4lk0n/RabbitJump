@@ -28,8 +28,9 @@ namespace WaveEngineGame1Project
                 VerticalAlignment = WaveEngine.Framework.UI.VerticalAlignment.Center,
                 Text = string.Empty,
                 IsBorder = false,
-                BackgroundImage = "Content/play_button.wpk",
-                PressedBackgroundImage = "Content/play_button_pressed.wpk"
+                BackgroundImage = "Content/play.wpk",
+                PressedBackgroundImage = "Content/playPuls.wpk",
+                DrawOrder = 0.0f
             };
 
             button.Click += Play;
@@ -45,18 +46,21 @@ namespace WaveEngineGame1Project
                 //Margin = new Thickness(0, 100, 0, 0)
             };
 
-            Image title = new Image("Titulo", "Content/LOGORABBITRUN.wpk")
+            /*Image title = new Image("Titulo", "Content/LOGORABBITRUN.wpk")
             {
                 HorizontalAlignment = HorizontalAlignment.Center,
                 VerticalAlignment = VerticalAlignment.Top,
+            };*/
+
+            Image background = new Image("Fondo", "Content/portada.wpk")
+            {
+                DrawOrder = 0.5f
             };
 
-            Image background = new Image("Fondo", "Content/fondo1.wpk");
-
-            Image floor = new Image("Suelo", "Content/suelo2.wpk")
+            /*Image floor = new Image("Suelo", "Content/suelo2.wpk")
             {
                 VerticalAlignment = VerticalAlignment.Bottom,
-            };
+            };*/
 
             /*TextBlock title = new TextBlock()
             {
@@ -71,10 +75,10 @@ namespace WaveEngineGame1Project
                 
             };*/
 
-            EntityManager.Add(title);
+            //EntityManager.Add(title);
             EntityManager.Add(bestscore);
             EntityManager.Add(button);
-            EntityManager.Add(floor);
+            //EntityManager.Add(floor);
             EntityManager.Add(background);
         }
 

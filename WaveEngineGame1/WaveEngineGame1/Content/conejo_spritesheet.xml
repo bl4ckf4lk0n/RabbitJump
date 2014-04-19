@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
-<!-- $TexturePacker:SmartUpdate:286b70d488e0b87ec3eefe86d0806200:edabddf16fae5b9771a473f1ce1a3022:1c9285d20b13a002f06327196abf79ba$ -->
+<!-- $TexturePacker:SmartUpdate:ae51e7e04de50ef56e4819efcff5a185:ccc7e8026f026094abbf8060a2bbc24a:1c9285d20b13a002f06327196abf79ba$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -13,11 +13,11 @@ oW => sprite's original width (only available if trimmed)
 oH => sprite's original height (only available if trimmed)
 r => 'y' only set if sprite is rotated
 -->
-<TextureAtlas imagePath="conejo_spritesheet.png" width="256" height="256">
-    <sprite n="conejo_1.png" x="2" y="2" w="65" h="61" oX="10" oY="14" oW="75" oH="75"/>
-    <sprite n="conejo_2.png" x="69" y="2" w="71" h="63" oX="3" oY="12" oW="75" oH="75"/>
-    <sprite n="conejo_3.png" x="142" y="2" w="65" h="61" oX="6" oY="14" oW="75" oH="75"/>
-    <sprite n="conejo_4.png" x="2" y="67" w="67" h="61" oX="4" oY="14" oW="75" oH="75"/>
-    <sprite n="conejo_5.png" x="71" y="67" w="71" h="63" oX="2" oY="12" oW="75" oH="75"/>
-    <sprite n="conejo_6.png" x="144" y="67" w="75" h="49" oX="0" oY="26" oW="75" oH="75"/>
+<TextureAtlas imagePath="conejo_spritesheet.png" width="333" height="63">
+    <sprite n="conejo_1.png" x="0" y="0" w="65" h="63"/>
+    <sprite n="conejo_2.png" x="65" y="0" w="69" h="63"/>
+    <sprite n="conejo_3.png" x="134" y="0" w="64" h="63"/>
+    <sprite n="conejo_4.png" x="198" y="0" w="65" h="63"/>
+    <sprite n="conejo_5.png" x="65" y="0" w="69" h="63"/>
+    <sprite n="conejo_6.png" x="263" y="0" w="70" h="63"/>
 </TextureAtlas>
