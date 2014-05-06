@@ -39,8 +39,10 @@ namespace WaveEngineGame1Project
             {
                 best_score = "00:00";
             }
-            sr.Close();
-            stream.Close();
+            sr.Dispose();
+            stream.Dispose();
+            /*sr.Close();
+            stream.Close();*/
         }
 
         public static void EscribirMejorPuntuacion(string tiempo)
@@ -49,8 +51,11 @@ namespace WaveEngineGame1Project
             StreamWriter sw = new StreamWriter(stream);
 
             sw.WriteLine(tiempo);
-            sw.Close();
-            stream.Close();
+
+            sw.Dispose();
+            stream.Dispose();
+            //sw.Close();
+            //stream.Close();
         }
     }
 }

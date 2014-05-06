@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns="http://schemas.microsoft.com/appx/2010/manifest">
+  <Identity Name="A80DC19F-42F6-4B75-B534-6B10589B09B4" Publisher="CN=Adrián" Version="1.0.0.0" />
+  <Properties>
+    <DisplayName>RabbitRun</DisplayName>
+    <PublisherDisplayName>Adrian</PublisherDisplayName>
+    <Logo>Images\StoreLogo.png</Logo>
+    <Description>WaveEngineGame1 Launcher</Description>
+  </Properties>
+  <Prerequisites>
+    <OSMinVersion>6.2</OSMinVersion>
+    <OSMaxVersionTested>6.2</OSMaxVersionTested>
+  </Prerequisites>
+  <Resources>
+    <Resource Language="x-generate" />
+  </Resources>
+  <Applications>
+    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="Launcher.App">
+      <VisualElements DisplayName="RabbitRun" Logo="Images\Logo.png" SmallLogo="Images\SmallLogo.png" Description="Make the rabbit dodge rocks falling from the sky" ForegroundText="light" BackgroundColor="#222222">
+        <DefaultTile ShowName="allLogos" />
+        <SplashScreen Image="Images\SplashScreen.png" />
+      </VisualElements>
+    </Application>
+  </Applications>
+  <Capabilities>
+    <Capability Name="internetClient" />
+  </Capabilities>
+</Package>

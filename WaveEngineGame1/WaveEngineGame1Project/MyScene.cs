@@ -20,7 +20,7 @@ namespace WaveEngineGame1Project
     {
 
         private int cont = 0;
-        private float altura = 50f;
+        private float altura = 0;
         private DateTime startTime;
         private TextBlock score;
         private TextBlock bestscore;
@@ -68,9 +68,12 @@ namespace WaveEngineGame1Project
                 })
                 .AddComponent(new Sprite("Content/conejo_spritesheet.wpk"))
                 .AddComponent(Animation2D.Create<TexturePackerGenericXml>("Content/conejo_spritesheet.xml")
-                    .Add("Idle", new SpriteSheetAnimationSequence() { First = 1, Length = 1 })
-                    .Add("Running", new SpriteSheetAnimationSequence() { First = 1, Length = 5 })
-                    .Add("Dead", new SpriteSheetAnimationSequence() { First = 6, Length = 1 }))
+                    .Add("IdleLeft", new SpriteSheetAnimationSequence() { First = 1, Length = 1 })
+                    .Add("IdleRight", new SpriteSheetAnimationSequence() { First = 7, Length = 1 })
+                    .Add("RunningLeft", new SpriteSheetAnimationSequence() { First = 1, Length = 5 })
+                    .Add("RunningRight", new SpriteSheetAnimationSequence() { First = 7, Length = 5 })
+                    .Add("DeadLeft", new SpriteSheetAnimationSequence() { First = 6, Length = 1 })
+                    .Add("DeadRight", new SpriteSheetAnimationSequence() { First = 12, Length = 1 }))
                 .AddComponent(new AnimatedSpriteRenderer(DefaultLayers.Alpha))
                 .AddComponent(new RectangleCollider())
                 .AddComponent(new PersonajeBehavior(this))
@@ -161,7 +164,8 @@ namespace WaveEngineGame1Project
 
         private void BallSpawn()
         {
-            System.Threading.Thread.Sleep(10);
+            System.Threading.Tasks.Task.Delay(10);
+            //System.Threading.Thread.Sleep(10);
             //Rango1 = 0 - 260
             //Rango2 = 261 - 525
             //Rango3 = 526 - 775

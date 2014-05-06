@@ -43,6 +43,7 @@ namespace WaveEngineGame1Project
 
         private int direction;
         private TouchPanelState touchpanel;
+        private KeyboardState keyboard;
 
 
         private Input input;
@@ -86,6 +87,17 @@ namespace WaveEngineGame1Project
                             currentState = AnimState.Left;
                         }
                     }
+
+                    keyboard = WaveServices.Input.KeyboardState;
+
+                    if (keyboard.D == ButtonState.Pressed)
+                    {
+                        currentState = AnimState.Right;
+                    }
+                    else if (keyboard.A == ButtonState.Pressed)
+                    {
+                        currentState = AnimState.Left;
+                    }
                 }
 
 
@@ -95,27 +107,28 @@ namespace WaveEngineGame1Project
                     switch (currentState)
                     {
                         case AnimState.Idle:
-                            anim2D.CurrentAnimation = "Idle";
+                            if (lastMovement == RIGHT)
+                                anim2D.CurrentAnimation = "IdleRight";
+                            else
+                                anim2D.CurrentAnimation = "IdleLeft";
                             anim2D.Play(true);
                             direction = NONE;
                             break;
                         case AnimState.Right:
-                            anim2D.CurrentAnimation = "Running";
-                            trans2D.Effect = SpriteEffects.FlipHorizontally;
+                            anim2D.CurrentAnimation = "RunningRight";
                             anim2D.Play(true);
                             direction = RIGHT;
                             break;
                         case AnimState.Left:
-                            anim2D.CurrentAnimation = "Running";
-                            trans2D.Effect = SpriteEffects.None;
+                            anim2D.CurrentAnimation = "RunningLeft";
                             anim2D.Play(true);
                             direction = LEFT;
                             break;
                         case AnimState.Dead:
-                            anim2D.CurrentAnimation = "Dead";
-                            trans2D.Effect = SpriteEffects.None;
-                            if(lastMovement == RIGHT)
-                                trans2D.Effect = SpriteEffects.FlipHorizontally;
+                            if (lastMovement == RIGHT)
+                                anim2D.CurrentAnimation = "DeadRight";
+                            else
+                                anim2D.CurrentAnimation = "DeadLeft";
                             anim2D.Play(true);
                             direction = NONE;
                             WaveEngine.Framework.Services.Timer timer = WaveServices.TimerFactory.CreateTimer("Dead", TimeSpan.FromSeconds(1f),  () =>
